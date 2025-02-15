@@ -1,3 +1,5 @@
+<!-- Yahya Afzal -->
+ <!-- 200597142 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,19 +9,41 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>See 'N' Say Storymaker</h1>
-    <p>Click each button to select a part of your story!</p>
+    <div class="container">
+        <h1>See 'N' Say Storymaker</h1>
+        
+        <div class="choices">
+            <div>
+                <button id="part1">Choose the character</button>
+                <span id="part1-choice">None</span>
+            </div>
+            <div>
+                <button id="part2">Choose the action</button>
+                <span id="part2-choice">None</span>
+            </div>
+            <div>
+                <button id="part3">Choose the object</button>
+                <span id="part3-choice">None</span>
+            </div>
+            <div>
+                <button id="part4">Choose the setting</button>
+                <span id="part4-choice">None</span>
+            </div>
+            <div>
+                <button id="part5">Choose the time</button>
+                <span id="part5-choice">None</span>
+            </div>
+        </div>
 
-    <div class="story-container">
-        <button id="part1">The turkey</button>
-        <button id="part2">sat on</button>
-        <button id="part3">a funny</button>
-        <button id="part4">goat</button>
-        <button id="part5">on the moon</button>
+        <button id="showStory">Show my story</button>
+        <button id="randomStory">Generate random story</button>
+        <button id="reset">Reset</button>
+
+        <h2>Your Story</h2>
+        <p id="storyOutput">Your story will appear here.</p>
+
+        <audio id="storyAudio" controls></audio>
     </div>
-
-    <button id="generate-story">See Your Story</button>
-    <p id="story-output"></p>
 
     <script src="script.js"></script>
 </body>
