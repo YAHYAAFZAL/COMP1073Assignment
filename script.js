@@ -1,71 +1,89 @@
 // script.js
 
-// Arrays holding possible words/phrases for each sentence part
-const subjects = ["The turkey", "Mom", "Dad", "The dog", "My teacher", "The cat"];
-const verbs = ["sat on", "danced with", "saw", "doesn't like", "kissed"];
-const adjectives = ["a funny", "a scary", "a goofy", "a slimy", "a barking"];
-const nouns = ["goat", "monkey", "cow", "frog", "bug"];
-const locations = ["on the moon", "on the chair", "in my spaghetti", "in my soup", "on the grass"];
+// Define arrays of possible choices
+const characters = ['The dog', 'The cat', 'A dragon', 'A robot', 'The bird'];
+const actions = ['ran', 'jumped', 'slept', 'sang', 'danced'];
+const objects = ['a ball', 'a toy', 'a book', 'a hat', 'a stick'];
+const settings = ['in the park', 'on the moon', 'at the beach', 'in the forest', 'in the city'];
+const times = ['in the morning', 'at night', 'during the day', 'at sunset', 'at dawn'];
 
-// Variables to store selected words
-let selectedSubject = "";
-let selectedVerb = "";
-let selectedAdjective = "";
-let selectedNoun = "";
-let selectedLocation = "";
+// Variables to store the user's choices
+let part1Choice = '';
+let part2Choice = '';
+let part3Choice = '';
+let part4Choice = '';
+let part5Choice = '';
 
-// Function to cycle through words
-function cycleWord(category, buttonId) {
-    let choices;
-    switch(category) {
-        case 'subject': choices = subjects; break;
-        case 'verb': choices = verbs; break;
-        case 'adjective': choices = adjectives; break;
-        case 'noun': choices = nouns; break;
-        case 'location': choices = locations; break;
-    }
-    let currentIndex = choices.indexOf(document.getElementById(buttonId).innerText);
-    let newIndex = (currentIndex + 1) % choices.length;
-    document.getElementById(buttonId).innerText = choices[newIndex];
-    switch(category) {
-        case 'subject': selectedSubject = choices[newIndex]; break;
-        case 'verb': selectedVerb = choices[newIndex]; break;
-        case 'adjective': selectedAdjective = choices[newIndex]; break;
-        case 'noun': selectedNoun = choices[newIndex]; break;
-        case 'location': selectedLocation = choices[newIndex]; break;
-    }
+// Functions to cycle through the choices and update the displayed choice
+function cycleChoice(array, part) {
+    let currentIndex = array.indexOf(part);
+    currentIndex = (currentIndex + 1) % array.length;
+    return array[currentIndex];
 }
 
-// Function to generate and display the final story
-function generateStory() {
-    if (selectedSubject && selectedVerb && selectedAdjective && selectedNoun && selectedLocation) {
-        document.getElementById("storyOutput").innerText = `${selectedSubject} ${selectedVerb} ${selectedAdjective} ${selectedNoun} ${selectedLocation}.`;
-    } else {
-        document.getElementById("storyOutput").innerText = "Please select all words to create a story.";
-    }
-}
+// Event listeners for each button
+document.getElementById('part1').addEventListener('click', function () {
+    part1Choice = cycleChoice(characters, part1Choice);
+    document.getElementById('part1-choice').textContent = part1Choice;
+});
+
+document.getElementById('part2').addEventListener('click', function () {
+    part2Choice = cycleChoice(actions, part2Choice);
+    document.getElementById('part2-choice').textContent = part2Choice;
+});
+
+document.getElementById('part3').addEventListener('click', function () {
+    part3Choice = cycleChoice(objects, part3Choice);
+    document.getElementById('part3-choice').textContent = part3Choice;
+});
+
+document.getElementById('part4').addEventListener('click', function () {
+    part4Choice = cycleChoice(settings, part4Choice);
+    document.getElementById('part4-choice').textContent = part4Choice;
+});
+
+document.getElementById('part5').addEventListener('click', function () {
+    part5Choice = cycleChoice(times, part5Choice);
+    document.getElementById('part5-choice').textContent = part5Choice;
+});
+
+// Function to display the final story
+document.getElementById('showStory').addEventListener('click', function () {
+    const story = `${part1Choice} ${part2Choice} ${part3Choice} ${part4Choice} ${part5Choice}.`;
+    document.getElementById('storyOutput').textContent = story;
+
+    // Optional: Add audio output
+    const audio = new SpeechSynthesisUtterance(story);
+    window.speechSynthesis.speak(audio);
+});
 
 // Function to generate a random story
-function randomStory() {
-    selectedSubject = subjects[Math.floor(Math.random() * subjects.length)];
-    selectedVerb = verbs[Math.floor(Math.random() * verbs.length)];
-    selectedAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
-    selectedNoun = nouns[Math.floor(Math.random() * nouns.length)];
-    selectedLocation = locations[Math.floor(Math.random() * locations.length)];
-    document.getElementById("storyOutput").innerText = `${selectedSubject} ${selectedVerb} ${selectedAdjective} ${selectedNoun} ${selectedLocation}.`;
-}
+document.getElementById('randomStory').addEventListener('click', function () {
+    const randomStory = `${characters[Math.floor(Math.random() * characters.length)]} 
+                         ${actions[Math.floor(Math.random() * actions.length)]} 
+                         ${objects[Math.floor(Math.random() * objects.length)]} 
+                         ${settings[Math.floor(Math.random() * settings.length)]} 
+                         ${times[Math.floor(Math.random() * times.length)]}.`;
 
-// Function to reset selections
-function resetStory() {
-    document.getElementById("subjectButton").innerText = "Choose Subject";
-    document.getElementById("verbButton").innerText = "Choose Verb";
-    document.getElementById("adjectiveButton").innerText = "Choose Adjective";
-    document.getElementById("nounButton").innerText = "Choose Noun";
-    document.getElementById("locationButton").innerText = "Choose Location";
-    document.getElementById("storyOutput").innerText = "";
-    selectedSubject = "";
-    selectedVerb = "";
-    selectedAdjective = "";
-    selectedNoun = "";
-    selectedLocation = "";
-}
+    document.getElementById('storyOutput').textContent = randomStory;
+
+    // Optional: Add audio output
+    const audio = new SpeechSynthesisUtterance(randomStory);
+    window.speechSynthesis.speak(audio);
+});
+
+// Reset function
+document.getElementById('reset').addEventListener('click', function () {
+    part1Choice = '';
+    part2Choice = '';
+    part3Choice = '';
+    part4Choice = '';
+    part5Choice = '';
+
+    document.getElementById('part1-choice').textContent = 'None';
+    document.getElementById('part2-choice').textContent = 'None';
+    document.getElementById('part3-choice').textContent = 'None';
+    document.getElementById('part4-choice').textContent = 'None';
+    document.getElementById('part5-choice').textContent = 'None';
+    document.getElementById('storyOutput').textContent = 'Your story will appear here.';
+});
